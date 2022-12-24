@@ -1,4 +1,4 @@
-//#pragma warning(disable:4996)
+#pragma warning(disable:4996)
 
 //#include<stdio.h>
 //#include<string.h>
@@ -166,74 +166,120 @@
 
 //思想：分治
 
-//  1. 确定分界点  左端点，右端点，中间点，随机点
-// *2. 调整区间，使左段都小于分界点，右段都大于分界点   
-//  3. 递归处理左右两段
+//   时间复杂度  O（nlogn）
+
+//   1. 确定分界点  左端点，右端点，中间点，随机点
+// * 2. 调整区间，使左段都小于分界点，右段都大于分界点   
+//   3. 递归处理左右两段
+//        注意边界
 
 //第二步的暴力做法（忘记时使用） 开两个数组，扫描
 // 目标数组一分界点为区间分到两个数组，然后在把小
 //于分界点的先插回去。
 
-//第二部的优美做法（）两个指针从两端走，左指针遇到
+//第二部的优美做法：两个指针从两端走，左指针遇到
 //比分界点大就停止，同时右指针遇到比分界点小的也停
 //止，如果都停止则swap一下，然后继续向中间扫描
 
 
 
-#include<iostream>
-#include<algorithm>
-using namespace std;
-
-const int N = 1e6 + 10;
-
-int n;
-int q[N];
-
-void quick_sort(int q[], int l, int r)
-{
-	if (l >= r) return;
-	int x = q[l];					//分界点
-	int i = l - 1, j = r + 1;		//两个指针
-
-	while (i < j)
-	{
-		do i++; while (q[i] < x);
-		do j--; while (q[j] > x);
-		if (i < j)swap(q[i],q[j]);
-	}
-	quick_sort(q, l, j);
-	quick_sort(q, j + 1, r);
-}
-
-int main()
-{
-	scanf("%d", &n);
-	for (int i = 0; i < n; i++) scanf("%d", &q[i]);
-
-	quick_sort(q, l, r);		//l为左端点，r为有端点。
-
-	for (int i = 0; i < n; i++) printf("%d ", q[i]);
-
-	return 0;
-}
-
-
-
-
-
-
-
+//#include<iostream>
+//#include<algorithm>
+//using namespace std;
+//
+//const int N = 1e6 + 10;
+//
+//int n;
+//int q[N];
+//
+//void quick_sort(int q[], int l, int r)
+//{
+//	if (l >= r) return;
+//	int x = q[l];					//分界点
+//	int i = l - 1, j = r + 1;		//两个指针
+//
+//	while (i < j)
+//	{
+//		do i++; while (q[i] < x);
+//		do j--; while (q[j] > x);
+//		if (i < j) swap(q[i],q[j]);
+//	}
+//	quick_sort(q, l, j);			//处理左半部分
+//	quick_sort(q, j + 1, r);		//处理右半部分		当为j时边界x不能取到q[r];
+//}
+//
+//int main()
+//{
+//	scanf("%d", &n);
+//	for (int i = 0; i < n; i++) scanf("%d", &q[i]);
+//
+//	quick_sort(q, 0, n-1);		
+//
+//	for (int i = 0; i < n; i++) printf("%d ", q[i]);
+//
+//	return 0;
+//}
 
 
 
 
 
 			/**********************
-			 *		 归并排序     *
+			 *		归并排序      *
 			 **********************/
 
 
 //思想： 分治
+
+//   时间复杂度  O（nlogn）
+
+//	 1.找分界点mid = （l+r）/ 2 
+//	 2.递归排序左边和右边
+// * 3.归并 —— 合二为一  (双指针 分别指向两个数组的最小值，然后较小的移动到新数组)
+//							相同的话一般移动第一个数组的数（因为是稳定的）归并是稳定的 快排不稳定
+//							
+
+
+//#include<iostream>
+//#include<algorithm>
+//using namespace std;
+//
+//const int N = 1e6 + 10;
+//
+//int n;
+//int q[N], tmp[N];
+//
+//void merge_sort(int q[], int l, int r)
+//{
+//	if (l >= r) return;
+//
+//	int mid = l + r >> 1;
+//
+//	merge_sort(q, l, mid), merge_sort(q, mid + 1, r);
+//
+//	int k = 0, i = l, j = mid + 1;					//k 为存放了多少个数，i 为第一个数组的左端点
+//													//j 为第二个数组的左端点
+//	while (i <= mid && j <= r)
+//	{
+//		if (q[i] <= q[j]) tmp[k++] = q[i++];
+//		else tmp[k++] = q[j++];
+//	}
+//	while (i <= mid) tmp[k++] = q[i++];
+//	while (j <= r) tmp[k++] = q[j++];
+//
+//	for (i = l, j = 0; i <= r; i++, j++) q[i] = tmp[j];
+//}
+//
+//int main()
+//{
+//	scanf("%d", &n);
+//	for (int i = 0; i < n; i++) scanf("%d", &q[i]);
+//
+//	merge_sort(q, 0, n - 1);
+//
+//	for (int i = 0; i < n; i++) printf("%d ",q[i]);
+//	return 0;
+//}
 
 
 
